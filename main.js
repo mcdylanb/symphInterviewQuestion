@@ -1,11 +1,11 @@
 const items = [
+  { id: 6, seqId: 2, parent: null, name: "controllers" },
+  { id: 1, seqId: 1, parent: null, name: "components" },
   { id: 2, seqId: 4, parent: 5, name: "index.tsx" },
   { id: 3, seqId: 3, parent: 1, name: "Sidebar" },
   { id: 4, seqId: 5, parent: 1, name: "Table" },
   { id: 7, seqId: 5, parent: 5, name: "SelectableDropdown.tsx" },
-  { id: 5, seqId: 2, parent: 1, name: "AssignmentTable" },
-  { id: 1, seqId: 1, parent: null, name: "components" },
-  { id: 6, seqId: 2, parent: null, name: "controllers" }
+  { id: 5, seqId: 2, parent: 1, name: "AssignmentTable" }
 ];
 
 /*
@@ -23,12 +23,11 @@ const transformItems = (list) => {
   let arrangedArray = [];
   let modifiedArray = [];
 
-
   //arrange list base on seqid
   const arrangeArrayFunc = (list, max) => {
     let arrangedArray = [];
     for (let x = 0; x <= max; x++) {
-        arrangedArray = arrangedArray.concat(list.filter((e) => e.seqId == x));
+      arrangedArray = arrangedArray.concat(list.filter((e) => e.seqId == x));
     }
     return arrangedArray;
   };
@@ -37,25 +36,20 @@ const transformItems = (list) => {
   const addChild = (parent, list) => {
     let depth = 1;
     //loops array to check whether element has child
-    for (let x = 0; x < parent.length; x++) {
+    parent.forEach((x) => {
       //sets null parent value depth 0
-      if (parent[x].parent == null) parent[x].depth = 0;
+      if (x.parent == null) x.depth = 0;
       for (let y = list.length - 1; y > 0; y--) {
-        if (parent[x].id == list[y].parent) {
+        if (x.id == list[y].parent) {
           list[y].depth = depth;
-          modifiedArray.splice(
-            modifiedArray.indexOf(parent[x]) + 1,
-            0,
-            list[y]
-          );
+          modifiedArray.splice(modifiedArray.indexOf(x) + 1, 0, list[y]);
         }
       }
-      depth++;
-    }
+    });
   };
 
   // Main Process
-  max = Math.max(...list.map(e=>e.seqId)); //sets max of list value of seqid
+  max = Math.max(...list.map((e) => e.seqId)); //sets max of list value of seqid
   arrangedArray = arrangeArrayFunc(list, max); //arrangesArray
   modifiedArray = arrangedArray.filter((e) => e.parent == null); //set roots to modifiedArray
   while (modifiedArray.length < arrangedArray.length) {
