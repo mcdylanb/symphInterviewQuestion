@@ -9,22 +9,15 @@ const items = [
 ];
 
 
-//TODO:
-//  - arrange via seqId
-//  - add depth
-
+my work flow 
 
 //loop to find the max number
 let max = 0;
 for(let y = 0; y < items.length; y++){
-  console.log(items[y].seqId)
   if(items[y].seqId > max){
     max=items[y].seqId;
   } 
 }
-
-console.log("max number:" + max)
-
 
 //arrange items
 let arrangedArray = [];
@@ -35,30 +28,27 @@ let arrangedArray = [];
     }
   }
 
-console.log(arrangedArray)
-
-
-
 //find the root and place to modifiedArray
 let modifiedArray = arrangedArray.filter(e=> e.parent == null)
 
+
 //function to add child next to parent
 const addChild = (parent, list) => {
+  let depth = 1
   //loops array to check whether element has child
-
   for( let x = 0; x < parent.length; x++){
+    if(parent[x].parent == null) parent[x].depth = 0
     for(let y = list.length -1; y > 0; y--){
       if(parent[x].id == list[y].parent){
-        // modifiedArray.splice(modifiedArray.indexOf(parent[x])+1 ,0, list[y])
+        list[y].depth = depth
         modifiedArray.splice(modifiedArray.indexOf(parent[x])+1 ,0, list[y])
       } 
     } 
+    depth++
   }
 } 
 
-while ( modifiedArray.length < arrangedArray.length){
   addChild(modifiedArray, arrangedArray)
-} 
 
 console.log(modifiedArray)
 
