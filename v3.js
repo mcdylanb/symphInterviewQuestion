@@ -6,10 +6,15 @@ const items = [
   { id: 7, seqId: 5, parent: 5, name: "SelectableDropdown.tsx" },
   { id: 6, seqId: 2, parent: null, name: "controllers" },
   { id: 3, seqId: 3, parent: 1, name: "Sidebar" },
+  { id: 3, seqId: 3, parent: 1, name: "Sidebar" },
+  { id: 6, seqId: 2, parent: null, name: "controllers" },
 ];
 
 
-my work flow 
+// my work flow : 
+// arrange list with seqId
+// first add the root files
+// then run function placing child beside
 
 //loop to find the max number
 let max = 0;
@@ -21,14 +26,14 @@ for(let y = 0; y < items.length; y++){
 
 //arrange items
 let arrangedArray = [];
-  for( let x = 0; x <= max; x++){
-    for(let y = 0; y < items.length; y++){
-      arrangedArray = arrangedArray.concat(items.filter(e=> e.seqId == x))
-      break;
-    }
+for( let x = 0; x <= max; x++){
+  for(let y = 0; y < items.length; y++){
+    arrangedArray = arrangedArray.concat(items.filter(e=> e.seqId == x))
+    break;
   }
+}
 
-//find the root and place to modifiedArray
+//find  root and place to modifiedArray
 let modifiedArray = arrangedArray.filter(e=> e.parent == null)
 
 
@@ -37,6 +42,7 @@ const addChild = (parent, list) => {
   let depth = 1
   //loops array to check whether element has child
   for( let x = 0; x < parent.length; x++){
+    //sets null parent value depth 0
     if(parent[x].parent == null) parent[x].depth = 0
     for(let y = list.length -1; y > 0; y--){
       if(parent[x].id == list[y].parent){
@@ -48,7 +54,10 @@ const addChild = (parent, list) => {
   }
 } 
 
+//applies addchild functino until length similar
+while ( modifiedArray.length < arrangedArray.length){
   addChild(modifiedArray, arrangedArray)
+} 
 
 console.log(modifiedArray)
 
