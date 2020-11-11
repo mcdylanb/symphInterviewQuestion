@@ -23,6 +23,10 @@ const transformItems = (list) => {
   let arrangedArray = [];
   let modifiedArray = [];
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6123fdaeabab4df64957e87e3966f65d79647b64
   //arrange list base on seqid
   const arrangeArrayFunc = (list, max) => {
     let arrangedArray = [];
@@ -49,7 +53,11 @@ const transformItems = (list) => {
   };
 
   // Main Process
+<<<<<<< HEAD
   max = Math.max(...list.map((e) => e.seqId)); //sets max of list value of seqid
+=======
+  max = Math.max(...list.map(e=>e.seqId)); //sets max
+>>>>>>> 6123fdaeabab4df64957e87e3966f65d79647b64
   arrangedArray = arrangeArrayFunc(list, max); //arrangesArray
   modifiedArray = arrangedArray.filter((e) => e.parent == null); //set roots to modifiedArray
   while (modifiedArray.length < arrangedArray.length) {
