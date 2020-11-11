@@ -23,17 +23,6 @@ const transformItems = (list) => {
   let arrangedArray = [];
   let modifiedArray = [];
 
-  //functions
-  //loop to find the max number
-  const findMax = (list) => {
-    let value = 0;
-    for (let y = 0; y < list.length; y++) {
-      if (list[y].seqId > value) {
-        value = list[y].seqId;
-      }
-    }
-    return value;
-  };
 
   //arrange list base on seqid
   const arrangeArrayFunc = (list, max) => {
@@ -66,7 +55,7 @@ const transformItems = (list) => {
   };
 
   // Main Process
-  max = findMax(list); //sets max
+  max = Math.max(...list.map(e=>e.seqId)); //sets max
   arrangedArray = arrangeArrayFunc(list, max); //arrangesArray
   modifiedArray = arrangedArray.filter((e) => e.parent == null); //set roots to modifiedArray
   while (modifiedArray.length < arrangedArray.length) {
