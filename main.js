@@ -39,10 +39,7 @@ const transformItems = (list) => {
   const arrangeArrayFunc = (list, max) => {
     let arrangedArray = [];
     for (let x = 0; x <= max; x++) {
-      for (let y = 0; y < list.length; y++) {
         arrangedArray = arrangedArray.concat(list.filter((e) => e.seqId == x));
-        break;
-      }
     }
     return arrangedArray;
   };
