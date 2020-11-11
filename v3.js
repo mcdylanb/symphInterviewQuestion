@@ -1,62 +1,63 @@
 const items = [
   { id: 1, seqId: 1, parent: null, name: "components" },
-  { id: 6, seqId: 2, parent: null, name: "controllers" },
-  { id: 5, seqId: 2, parent: 1, name: "AssignmentTable" },
-  { id: 3, seqId: 3, parent: 1, name: "Sidebar" },
-  { id: 2, seqId: 4, parent: 5, name: "index.tsx" },
   { id: 4, seqId: 5, parent: 1, name: "Table" },
+  { id: 5, seqId: 2, parent: 1, name: "AssignmentTable" },
+  { id: 2, seqId: 4, parent: 5, name: "index.tsx" },
   { id: 7, seqId: 5, parent: 5, name: "SelectableDropdown.tsx" },
+  { id: 6, seqId: 2, parent: null, name: "controllers" },
+  { id: 3, seqId: 3, parent: 1, name: "Sidebar" },
 ];
 
 
+//TODO:
+//  - arrange via seqId
+//  - add depth
+
+
+//loop to find the max number
+let max = 0;
+for(let y = 0; y < items.length; y++){
+  console.log(items[y].seqId)
+  if(items[y].seqId > max){
+    max=items[y].seqId;
+  } 
+}
+
+console.log("max number:" + max)
+
+
+//arrange items
+let arrangedArray = [];
+  for( let x = 0; x <= max; x++){
+    for(let y = 0; y < items.length; y++){
+      arrangedArray = arrangedArray.concat(items.filter(e=> e.seqId == x))
+      break;
+    }
+  }
+
+console.log(arrangedArray)
+
+
+
 //find the root and place to modifiedArray
-let modifiedArray = items.filter(e=> e.parent == null)
+let modifiedArray = arrangedArray.filter(e=> e.parent == null)
 
 //function to add child next to parent
 const addChild = (parent, list) => {
   //loops array to check whether element has child
 
-  let ifBreak;
-  //TODO: foreach cant be break so its advisable to change
   for( let x = 0; x < parent.length; x++){
-    for(let y = 0; y < list.length; y++){
+    for(let y = list.length -1; y > 0; y--){
       if(parent[x].id == list[y].parent){
-        console.log("found one")
-        // console.log("here")
-        // console.log(list.filter(e => e.parent == list[y].parent))
-        
-        // trying to use concat
-        // modifiedArray.concat( list.filter(e => e.parent == parent[x].parent))
-
-        // trying to use filter 
-        // modifiedArray.splice(modifiedArray.indexOf(parent[x])+1 ,0, list.filter(e => e.parent == list[y].parent))
+        // modifiedArray.splice(modifiedArray.indexOf(parent[x])+1 ,0, list[y])
         modifiedArray.splice(modifiedArray.indexOf(parent[x])+1 ,0, list[y])
       } 
     } 
   }
-  } 
+} 
 
-  // parent.forEach(parentItem => {
-  //   list.forEach(itemOfList => {
-  //     if(parentItem.id == itemOfList.parent){
-// // the problem here is for every iteration it adds it after the parent which concludes rearranged
-// // we want to place sub array in between
-  //     console.log(list.filter(e => e.parent == itemOfList.parent))
-  //     modifiedArray.splice(modifiedArray.indexOf(parentItem)+1 ,0,itemOfList)
-  //     }
-  //   } )
-  // } )
-// } 
-
-//new problem how to arrage via seqId
-//i think we should arrange ahead
-//
-//lets try to remove then place 
-//
-//and to get the depth
-
-while ( modifiedArray.length < items.length){
-  addChild(modifiedArray, items)
+while ( modifiedArray.length < arrangedArray.length){
+  addChild(modifiedArray, arrangedArray)
 } 
 
 console.log(modifiedArray)
